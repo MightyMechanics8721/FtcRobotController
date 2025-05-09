@@ -17,16 +17,15 @@ public class Arm {
     public static double armRetract = 0.85;
     public static double armExtend = 0.3;
     public static double armSpecimenExtend = 0;
-    public static double wristExtend = 1;
-    public static double wristRetract = 0.5;
-    public static double wristSpecimenExtend = 0.66;
+//    public static double wristExtenct = 0.5;
+//    public static double wristSpecimenExtend = 0.66;
     public static double armNeutral = 0.65;
     public static double armAuton = 0.5;
-    public static double wristAuton = 0.5;
+//    public static double wristAuton = 0.5;
     public ElapsedTime timer = new ElapsedTime();
     public Arm(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
-        this.servoWrist = new ServoAdvanced(hardwareMap.get(Servo.class, "wrist"));
+//        this.servoWrist = new ServoAdvanced(hardwareMap.get(Servo.class, "wrist"));
         this.servoArmLeft = new ServoAdvanced(hardwareMap.get(Servo.class, "armRight"));
         this.servoArmRight = new ServoAdvanced(hardwareMap.get(Servo.class, "armLeft"));
     }
@@ -47,13 +46,13 @@ public class Arm {
                         if (armPos == armState.RETRACT) {
                             servoArmLeft.setPosition(armExtend);
                             servoArmRight.setPosition(armExtend);
-                            servoWrist.setPosition(wristExtend);
+//                            servoWrist.setPosition(wristExtend);
                             armPos = armState.EXTEND;
                             armTimer.reset();
                         } else if (armPos == armState.EXTEND) {
                             servoArmLeft.setPosition(armRetract);
                             servoArmRight.setPosition(armRetract);
-                            servoWrist.setPosition(wristRetract);
+//                            servoWrist.setPosition(wristRetract);
                             armPos = armState.RETRACT;
                             armTimer.reset();
                         }
@@ -69,7 +68,7 @@ public class Arm {
 
                         servoArmLeft.setPosition(armRetract);
                         servoArmRight.setPosition(armRetract);
-                        servoWrist.setPosition(wristRetract);
+//                        servoWrist.setPosition(wristRetract);
                 return false;
             }
         };
@@ -80,7 +79,7 @@ public class Arm {
             public boolean run(@NonNull TelemetryPacket Packet) {
                 servoArmLeft.setPosition(armExtend);
                 servoArmRight.setPosition(armExtend);
-                servoWrist.setPosition(wristExtend);
+//                servoWrist.setPosition(wristExtend);
                 return false;
             }
         };
@@ -91,7 +90,7 @@ public class Arm {
             public boolean run(@NonNull TelemetryPacket Packet){
                 servoArmLeft.setPosition(armNeutral);
                 servoArmRight.setPosition(armNeutral);
-                servoWrist.setPosition(wristRetract);
+//                servoWrist.setPosition(wristRetract);
                 return false;
             }
         };
@@ -105,13 +104,13 @@ public class Arm {
                     if (armPos == armState.RETRACT) {
                         servoArmLeft.setPosition(armSpecimenExtend);
                         servoArmRight.setPosition(armSpecimenExtend);
-                        servoWrist.setPosition(wristSpecimenExtend);
+//                        servoWrist.setPosition(wristSpecimenExtend);
                         armPos = armState.SPEC;
                         armTimer.reset();
                     } else if (armPos == armState.SPEC) {
                         servoArmLeft.setPosition(armRetract);
                         servoArmRight.setPosition(armRetract);
-                        servoWrist.setPosition(wristRetract);
+//                        servoWrist.setPosition(wristRetract);
                         armPos = armState.RETRACT;
                         armTimer.reset();
                     }
@@ -126,7 +125,7 @@ public class Arm {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 servoArmLeft.setPosition(armAuton);
                 servoArmRight.setPosition(armAuton);
-                servoWrist.setPosition(wristAuton);
+//                servoWrist.setPosition(wristAuton);
                 return false;
             }
         };
