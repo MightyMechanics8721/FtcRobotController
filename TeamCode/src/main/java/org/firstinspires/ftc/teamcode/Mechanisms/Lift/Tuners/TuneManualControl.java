@@ -27,7 +27,10 @@ public class TuneManualControl extends LinearOpMode {
 //            }
             //Actions.runBlocking(lift.manualControl(gamepad1.left_stick_y));
             TelemetryPacket packet = new TelemetryPacket();
-            lift.manualControl(gamepad1.left_stick_y);
+            lift.manualControl(-gamepad2.left_stick_y);
+
+//                                    telemetryPacket.addLine("Acceleration: " + lift.liftMotorLe);
+//                                    telemetryPacket.addLine("maxHeight: " + maxHeight);
             dash.sendTelemetryPacket(packet);
         }
     }

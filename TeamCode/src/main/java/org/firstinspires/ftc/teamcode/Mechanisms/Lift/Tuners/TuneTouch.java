@@ -28,7 +28,7 @@ public class TuneTouch extends LinearOpMode {
             //Actions.runBlocking(lift.manualControl(gamepad1.left_stick_y));
             TelemetryPacket packet = new TelemetryPacket();
             lift.manualControl(gamepad1.left_stick_y).run(packet);
-            if (lift.limiter.isPressed()){
+            if (lift.touchSensor.isPressed()){
                 packet.put("touch sensor", "pressed");
             } else {
                 packet.put("touch sensor", "not pressed");

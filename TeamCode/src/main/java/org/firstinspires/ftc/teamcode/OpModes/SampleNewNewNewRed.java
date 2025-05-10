@@ -170,7 +170,7 @@ public class SampleNewNewNewRed extends LinearOpMode {
                                 lift.moveToHeight(0),
                                 drivetrain.goToPose(Utils.makePoseVector(-13, -35, -90)),
                                 arm.armNeutral()),
-                        drivetrain.goToPoseImpresice(Utils.makePoseVector(-9, -50, -90)),
+                        drivetrain.goToPoseImprecise(Utils.makePoseVector(-9, -50, -90)),
                         extension.midPos(),
                         sweeper.sweep(),
                         new SleepAction(.4),

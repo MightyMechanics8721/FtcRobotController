@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain.Utils.Utils.inverseKinematics;
 import static org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain.Utils.Utils.l;
 import static org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain.Utils.Utils.r;
@@ -24,7 +22,6 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 
 import org.ejml.simple.SimpleMatrix;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.Sensors.Battery;
 import org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain.Controllers.DrivetrainMotorController;
 import org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain.Controllers.GeometricController;
@@ -203,7 +200,7 @@ public class Drivetrain {
             }
         };
     }
-    public Action goToPoseImpresice(SimpleMatrix desiredPose) {
+    public Action goToPoseImprecise(SimpleMatrix desiredPose) {
         return new Action() {
             //private boolean initialized = false;
 

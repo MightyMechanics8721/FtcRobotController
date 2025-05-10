@@ -26,7 +26,8 @@ public class Lift {
     public DcMotorAdvanced liftMotorLeft;
     public DcMotorAdvanced liftMotorRight;
     public Encoder encoder;
-    public TouchSensor limiter;
+    public TouchSensor touchSensor;
+    boolean pastMaxHeight = false;
     public static double kA=0.2;
     public static double kV=0.2;
     public static double kG=0.1;
@@ -63,10 +64,10 @@ public class Lift {
         this.currentPosition = 0;
         this.feedForward = new FeedForward(kV, kA, 0);
         this.pid = new PID(kP, kI, kD, PID.functionType.LINEAR);
-        this.limiter = hardwareMap.get(TouchSensor.class, "liftTouch");
+        this.touchSensor = hardwareMap.get(TouchSensor.class, "liftTouch");
     }
     private void checkLimit(){
-        if (limiter.isPressed()){
+        if (touchSensor.isPressed()){
             encoder.reset();
         }
     }
@@ -118,28 +119,69 @@ public class Lift {
             }
         };
     }
+    public Action moveToZeroExact() {
+        return new Action() {
+            private double initialPos;
+            private boolean reverse;
+            private MotionProfile motionProfile;
+            private ElapsedTime t;
+            private boolean initialized = false;
+            private double targetHeight = 0;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if(!initialized){
+                    initialPos = ticksToInches(encoder.getCurrentPosition());
+                    reverse = !(targetHeight - initialPos >= 0);
+                    motionProfile = new MotionProfile(Math.abs(targetHeight-initialPos), maxVelocity, maxAcceleration, maxDeceleration, reverse);
+                    t = new ElapsedTime();
+                    initialized = true;
+                }
+                checkLimit();
+
+                double currentPosition = ticksToInches(encoder.getCurrentPosition());
+                double ffPower = feedForward.calculate(motionProfile.getVelocity(t.seconds()), motionProfile.getAcceleration(t.seconds()));
+                double pidPower = pid.calculate(initialPos + motionProfile.getPos(t.seconds()), currentPosition);
+                motorPower = pidPower + ffPower + kG - 0.05;
+                if (Math.abs(targetHeight - currentPosition) < liftThreshold){
+                    liftMotorLeft.setPower(kG);
+                    liftMotorRight.setPower(kG);
+                } else {
+                    liftMotorLeft.setPower(motorPower);
+                    liftMotorRight.setPower(motorPower);
+                }
+                packet.put("Current height (in)", currentPosition);
+                packet.put("Target height (in)", targetHeight);
+                packet.put("Motor velocity (in/s)", liftMotorLeft.getVelocity()/ticksPerInch);
+                packet.put("Target velocity (in/s)", motionProfile.getVelocity(t.seconds()));
+                packet.put("Feedforward power", ffPower);
+                packet.put("PID power", pidPower);
+                packet.put("Motor power", motorPower);
+
+                return Math.abs(targetHeight - currentPosition) > liftThreshold;
+            }
+        };
+    }
     public Action manualControl(double power) {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 double currentPosition = ticksToInches(encoder.getCurrentPosition());
+                if(currentPosition > maxHeight){
+                    pastMaxHeight = true;
+                }
                 if (currentPosition<1){
                     liftMotorLeft.setPower(power);
                     liftMotorRight.setPower(power);
                     packet.put("Motor Power", power);
-                } else if (currentPosition < maxHeight) {
+                } else if (!pastMaxHeight) {
                     liftMotorLeft.setPower(power + kG);
                     liftMotorRight.setPower(power + kG);
                     packet.put("Motor Power", power + kG);
                 } else {
-                    if (power < 0) {
-                        liftMotorLeft.setPower(power + kG);
-                        liftMotorRight.setPower(power + kG);
-                    } else {
-                        liftMotorLeft.setPower(kG);
-                        liftMotorRight.setPower(kG);
-                    }
+                        liftMotorLeft.setPower(power - 0.5);
+                        liftMotorRight.setPower(power - 0.5);
                     packet.put("Motor Power", kG);
+                    packet.put("Current height (in)", currentPosition);
                 }
                 return false;
             }

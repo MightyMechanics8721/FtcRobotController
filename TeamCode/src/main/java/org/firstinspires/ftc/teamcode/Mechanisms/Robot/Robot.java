@@ -93,6 +93,11 @@ public class Robot {
                 )
         );
     }
+    public Action moveToZero(){
+        return new SequentialAction(
+            lift.moveToHeight(0)
+        );
+    }
     public Action stopIfBlue(){
         return new Action() {
         private ElapsedTime t;

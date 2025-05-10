@@ -80,7 +80,7 @@ public class SampleBest extends LinearOpMode {
                         arm.armNeutral(),
                         new SleepAction(0.3),
                         new ParallelAction(
-                                lift.moveToHeight(0),
+                                lift.moveToZeroExact(),
                                 new SequentialAction(
                                         new ParallelAction(
                                                 drivetrain.goToPose(Utils.makePoseVector(-50,-14,-20))),
@@ -110,7 +110,7 @@ public class SampleBest extends LinearOpMode {
                         arm.armNeutral(),
                         new SleepAction(0.3),
                         new ParallelAction(
-                                lift.moveToHeight(0),
+                                lift.moveToZeroExact(),
                                 new SequentialAction(
                                         new ParallelAction(
                                                 drivetrain.goToPose(Utils.makePoseVector(-50,-22,21))),
@@ -140,7 +140,7 @@ public class SampleBest extends LinearOpMode {
                         arm.armNeutral(),
                         new SleepAction(0.3),
                         new ParallelAction(
-                                lift.moveToHeight(0),
+                                lift.moveToZeroExact(),
                                 //drivetrain.goToPose(Utils.makePoseVector(-42,-16.5,44)),
                                 drivetrain.goToPose(Utils.makePoseVector(-42,-15.5,35))),
                         robot.intakeDown(),
@@ -168,7 +168,7 @@ public class SampleBest extends LinearOpMode {
                         new SleepAction(0.3),
                         new ParallelAction(
                                 lift.moveToHeight(12),
-                                drivetrain.goToPoseImpresice(Utils.makePoseVector(-13, -35, 90)),
+                                drivetrain.goToPoseImprecise(Utils.makePoseVector(-13, -35, 90)),
                                 arm.armSpecimen()),
                         drivetrain.goToPose(Utils.makePoseVector(-13, -45, 90))
                 )

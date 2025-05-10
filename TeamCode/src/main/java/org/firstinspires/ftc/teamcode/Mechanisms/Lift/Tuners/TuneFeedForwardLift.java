@@ -48,6 +48,9 @@ public class TuneFeedForwardLift  extends LinearOpMode {
                         new SleepAction(1),
                         lift.moveToHeight(height2),
                         new SleepAction(1),
+                        lift.moveToZeroExact(),
+                        new SleepAction(1),
+                        lift.moveToHeight(height2),
                         lift.infiniteHold()
                         //lift.moveToHeight(24),
                                 //new SleepAction(1),
