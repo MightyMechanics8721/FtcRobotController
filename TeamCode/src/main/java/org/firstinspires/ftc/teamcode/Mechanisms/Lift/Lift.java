@@ -166,6 +166,9 @@ public class Lift {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 double currentPosition = ticksToInches(encoder.getCurrentPosition());
+
+                checkLimit();
+
                 if(currentPosition > maxHeight){
                     pastMaxHeight = true;
                 }
