@@ -21,19 +21,19 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Drivetrain.Utils.Utils;
 @Autonomous(name = "Near Side Park", group = "Autonomous")
 public class SidePark extends LinearOpMode {
     // Create drivetrain object
-    Drivetrain drivetrain = null;
+    Drivetrain drivetrain;
     // Use FTCDashboard
     FtcDashboard dashboard;
     Robot robot;
     @Override
     public void runOpMode() {
         // Set dashboard
-        //robot = new Robot(hardwareMap, new Battery(hardwareMap));
+        robot = new Robot(hardwareMap);
         drivetrain = robot.drivetrain;
         dashboard = FtcDashboard.getInstance();
         telemetry = dashboard.getTelemetry();
         ElapsedTime looptime = new ElapsedTime();
-        SimpleMatrix desiredPose = Utils.makePoseVector(0,24,0);
+        SimpleMatrix desiredPose = Utils.makePoseVector(0,0,0);
         telemetry.addData("x", 0);
         telemetry.addData("y", 0);
         telemetry.addData("theta", 0);
@@ -46,8 +46,7 @@ public class SidePark extends LinearOpMode {
         Actions.runBlocking(
             new ParallelAction(
                 new SequentialAction(
-                drivetrain.goToPose(desiredPose),
-                drivetrain.stopMotors()
+                        drivetrain.goToPose(Utils.makePoseVector(0, -10,0))
                 ),
                 drivetrain.updateTelemetry()
             )

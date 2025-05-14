@@ -65,10 +65,10 @@ public class SampleBest extends LinearOpMode {
                         robot.intakeUp(),
                         claw.servoClaw(Claw.clawState.CLOSE),
                         arm.armNeutral(),
-                        drivetrain.goToPose(Utils.makePoseVector(-57, -31,0)),
+//                        drivetrain.goToPose(Utils.makePoseVector(-57, -31,0)),
                         new ParallelAction(
                                 drivetrain.goToPose(Utils.makePoseVector(-57, -17,-43)),
-                                lift.moveToHeight(24),
+                                lift.moveToHeight(32),
                                 new SequentialAction(
                                         new SleepAction(.55),
                                         arm.armExtend()
@@ -87,10 +87,11 @@ public class SampleBest extends LinearOpMode {
                                         new ParallelAction(
                                                 robot.intakeDown(),
                                                 drivetrain.goToPose(Utils.makePoseVector(-47,-15,-20))))),
-                        new SleepAction(0.55),
+                        new SleepAction(1.3),
                         pivot.setPosition(Intake.intakeState.STOP),
                         extension.servoExtension(Extension.extensionState.RETRACT),
-                        new SleepAction(0.5),
+                        arm.armNeutral(),
+                        new SleepAction(1),
                         intake.motorIntake(Intake.intakeState.STOP),
                         arm.armRetract(),
                         new SleepAction(0.6),
@@ -98,7 +99,7 @@ public class SampleBest extends LinearOpMode {
                         new SleepAction(0.1),
                         new ParallelAction(
                                 drivetrain.goToPose(Utils.makePoseVector(-57, -17,-43)),
-                                lift.moveToHeight(24),
+                                lift.moveToHeight(32),
                                 new SequentialAction(
                                         new SleepAction(.4),
                                         arm.armExtend()
@@ -117,10 +118,11 @@ public class SampleBest extends LinearOpMode {
                                         new ParallelAction(
                                                 robot.intakeDown(),
                                                 drivetrain.goToPose(Utils.makePoseVector(-47,-20.5,21))))),
-                        new SleepAction(0.55),
+                        new SleepAction(1.3),
                         pivot.setPosition(Intake.intakeState.STOP),
                         extension.servoExtension(Extension.extensionState.RETRACT),
-                        new SleepAction(0.55),
+                        arm.armNeutral(),
+                        new SleepAction(1),
                         intake.motorIntake(Intake.intakeState.STOP),
                         arm.armRetract(),
                         new SleepAction(0.6),
@@ -128,7 +130,7 @@ public class SampleBest extends LinearOpMode {
                         new SleepAction(0.1),
                         new ParallelAction(
                                 drivetrain.goToPose(Utils.makePoseVector(-57, -17,-43)),
-                                lift.moveToHeight(24),
+                                lift.moveToHeight(32),
                                 new SequentialAction(
                                         new SleepAction(.4),
                                         arm.armExtend()
@@ -144,10 +146,11 @@ public class SampleBest extends LinearOpMode {
                                 //drivetrain.goToPose(Utils.makePoseVector(-42,-16.5,44)),
                                 drivetrain.goToPose(Utils.makePoseVector(-42,-15.5,35))),
                         robot.intakeDown(),
-                        new SleepAction(0.55),
+                        new SleepAction(1.3),
                         pivot.setPosition(Intake.intakeState.STOP),
                         extension.servoExtension(Extension.extensionState.RETRACT),
-                        new SleepAction(0.75),
+                        arm.armNeutral(),
+                        new SleepAction(1),
                         intake.motorIntake(Intake.intakeState.STOP),
                         arm.armRetract(),
                         new SleepAction(0.75),
@@ -155,7 +158,7 @@ public class SampleBest extends LinearOpMode {
                         new SleepAction(0.1),
                         new ParallelAction(
                                 drivetrain.goToPose(Utils.makePoseVector(-57, -17,-43)),
-                                lift.moveToHeight(24),
+                                lift.moveToHeight(32),
                                 new SequentialAction(
                                         new SleepAction(.75),
                                         arm.armExtend()
