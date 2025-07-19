@@ -89,7 +89,7 @@ public class Extension {
 
                 double currentPosition = ticksToInches(-encoder.getCurrentPosition());
                 double ffPower = feedForward.calculate(motionProfile.getVelocity(t.seconds()), motionProfile.getAcceleration(t.seconds()));
-                double pidPower = pid.calculate(initialPos + motionProfile.getPos(t.seconds()), currentPosition);
+                double pidPower = pid.calculate(initialPos + motionProfile.getPosition(t.seconds()), currentPosition);
                 motorPower = pidPower + ffPower ;
                 if (Math.abs(targetHeight - currentPosition) < extensionThreshold){
                     extensionMotor.setPower(0);
